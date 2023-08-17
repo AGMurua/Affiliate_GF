@@ -6,7 +6,7 @@ namespace AffiliatesApi.Business.Interfaces
     {
         public Task<ICollection<AffiliateDTO>> GetAll();
 
-        public void Create(AffiliateDTO payload);
+        public void Create(string name);
 
         public Task<ICollection<CustomerDTO>> GetByAffiliateId(Guid id);
 

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AffiliatesApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230817043453_InitDB")]
+    [Migration("20230817221310_InitDB")]
     partial class InitDB
     {
         /// <inheritdoc />
@@ -27,9 +27,11 @@ namespace AffiliatesApi.Migrations
 
             modelBuilder.Entity("AffiliatesApi.Data.Entities.AffiliateEntity", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -46,8 +48,8 @@ namespace AffiliatesApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AffiliateId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("AffiliateId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()

@@ -24,9 +24,11 @@ namespace AffiliatesApi.Migrations
 
             modelBuilder.Entity("AffiliatesApi.Data.Entities.AffiliateEntity", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -43,8 +45,8 @@ namespace AffiliatesApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AffiliateId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("AffiliateId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()

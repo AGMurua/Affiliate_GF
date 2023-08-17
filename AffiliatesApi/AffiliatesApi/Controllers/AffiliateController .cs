@@ -23,9 +23,9 @@ namespace AffiliatesApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(AffiliateDTO payload)
+        public IActionResult Create(string name)
         {
-            _affiliateService.Create(payload);
+            _affiliateService.Create(name);
             return  Ok();
         }
     }

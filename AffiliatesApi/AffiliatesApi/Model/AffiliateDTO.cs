@@ -2,8 +2,13 @@
 {
     public class AffiliateDTO
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public ICollection<CustomerDTO> Customers { get; set; }
+
+        public AffiliateDTO(string name)
+        {
+            Name = name;
+        }
     }
 }

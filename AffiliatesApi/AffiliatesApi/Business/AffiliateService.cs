@@ -20,7 +20,7 @@ namespace AffiliatesApi.Business
 
         public async Task<ICollection<AffiliateDTO>> GetAll()
         {
-           return new List<AffiliateDTO>();
+           return _mapper.Map<IList<AffiliateDTO>>(_repository.GetAllAsync());
         }
 
         public async Task<ICollection<CustomerDTO>> GetByAffiliateId(Guid id)
@@ -28,8 +28,9 @@ namespace AffiliatesApi.Business
             throw new NotImplementedException();
         }
 
-        public async void Create(AffiliateDTO payload)
+        public async void Create(string name)
         {
+            AffiliateDTO payload = new AffiliateDTO(name);
             _repository.Add(_mapper.Map<AffiliateEntity>(payload));
         }
     }

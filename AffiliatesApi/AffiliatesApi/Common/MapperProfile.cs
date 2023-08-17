@@ -11,6 +11,8 @@ namespace AffiliatesApi.Common
             // Add as many of these lines as you need to map your objects
             CreateMap<AffiliateDTO, AffiliateEntity>();
             CreateMap<AffiliateEntity, AffiliateDTO>();
+            CreateMap<IEnumerable<AffiliateEntity>, IEnumerable<AffiliateDTO>>();
+
         }
     }
 }

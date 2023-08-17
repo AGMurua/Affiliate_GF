@@ -1,8 +1,7 @@
 ﻿namespace AffiliatesApi.Model
 {
-    public class CustomerDTO
+    public class CustomerCreateDTO
     {
-        public int Id { get; set; }
         public int AffiliateId { get; set; }
         public string Name { get; set; }
     }
