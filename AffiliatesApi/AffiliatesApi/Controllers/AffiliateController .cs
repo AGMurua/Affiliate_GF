@@ -1,4 +1,5 @@
 ﻿using AffiliatesApi.Business.Interfaces;
+using AffiliatesApi.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,13 @@ namespace AffiliatesApi.Controllers
         public IActionResult GetAll()
         {
             return Ok(_affiliateService.GetAll());
+        }
+
+        [HttpPost]
+        public IActionResult Create(AffiliateDTO payload)
+        {
+            _affiliateService.Create(payload);
+            return  Ok();
         }
     }
 }
