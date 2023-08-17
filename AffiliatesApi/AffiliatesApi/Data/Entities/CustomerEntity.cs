@@ -4,6 +4,7 @@
     {
         public Guid Id { get; set; }
         public Guid AffiliateId { get; set; }
+        public AffiliateEntity Affiliate { get; set; }
         public string Name { get; set; }
     }
 }

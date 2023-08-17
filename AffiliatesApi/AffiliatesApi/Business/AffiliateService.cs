@@ -15,5 +15,9 @@ namespace AffiliatesApi.Business
            
         }
 
+        public Task<ICollection<CustomerDTO>> GetByAffiliateId(Guid id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
