@@ -33,7 +33,7 @@ namespace AffiliatesApiTest
         {
             CustomerCreateDTO payload = new()
             {
-                AffiliateId =1,
+                AffiliateId = 1,
                 Name = "Test Name Customer"
             };
             CustomerEntity customerToAdd = new()
@@ -57,11 +57,11 @@ namespace AffiliatesApiTest
 
         }
         [Fact]
-        public async void CreateSuccesfull()
+        public async void CreateUnsuccesfull()
         {
             CustomerCreateDTO payload = new()
             {
-                AffiliateId = 1,
+                AffiliateId = 3,
                 Name = "Test Name Customer"
             };
             CustomerEntity customerToAdd = new()
@@ -70,19 +70,43 @@ namespace AffiliatesApiTest
                 AffiliateId = 1,
                 Name = "Test Name Added Customer"
             };
-            AffiliateEntity affiliateLink = new()
-            {
-                Id = 1,
-                Name = "Test name"
-            };
+            AffiliateEntity affiliateLink = null;
             _mockRepositorieAffiliate.Setup(repo => repo.GetById(payload.AffiliateId)).ReturnsAsync(affiliateLink);
             _mockRepositorieCustomer.Setup(repo => repo.AddAsync(It.IsAny<CustomerEntity>())).ReturnsAsync(customerToAdd);
             var result = await _customerService.Create(payload);
+            Assert.Equal(null, result);
+        }
 
+        [Fact]
+        public async void GetCommisionReportTest()
+        {
+            AffiliateEntity affiliateLink = new()
+            {
+                Id = 1,
+                Name = "Affiliate 1"
+            };
+            List<CustomerEntity> customers = new()
+            {
+                new CustomerEntity
+                {
+                  Id = 1,
+                  AffiliateId = 1,
+                  Name = "Customer 1"
+                },
+                new CustomerEntity
+                {
+                  Id = 2,
+                  AffiliateId = 1,
+                  Name = "Customer 2"
+                },
 
-            Assert.Equal(3, result.Id);
-            Assert.Equal("Test Name Added Customer", result.Name);
+            };
 
+            _mockRepositorieAffiliate.Setup(repo => repo.GetById(affiliateLink.Id)).ReturnsAsync(affiliateLink);
+            _mockRepositorieCustomer.Setup(repo => repo.GetCommisions(affiliateLink.Id)).ReturnsAsync(customers.Count);
+
+            var result = await _customerService.GetCommisionReport(affiliateLink.Id);
+            Assert.Equal(2, result);
         }
     }
 }

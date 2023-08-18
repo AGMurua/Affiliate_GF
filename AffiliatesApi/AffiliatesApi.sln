@@ -5,7 +5,9 @@ VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AffiliatesApi", "AffiliatesApi\AffiliatesApi.csproj", "{6299361E-0A99-4C14-94DD-225B4EF2F28E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AffiliatesApiTest", "AffiliatesApiTest\AffiliatesApiTest.csproj", "{3A8C39A3-E2ED-4775-82C8-FDF73A50FEE6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessApiTest", "AffiliatesApiTest\BusinessApiTest.csproj", "{3A8C39A3-E2ED-4775-82C8-FDF73A50FEE6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControllerApiTest", "ControllerApiTest\ControllerApiTest.csproj", "{2E89EDF9-58F1-4C16-909F-1FDCDCD40BC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{3A8C39A3-E2ED-4775-82C8-FDF73A50FEE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A8C39A3-E2ED-4775-82C8-FDF73A50FEE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A8C39A3-E2ED-4775-82C8-FDF73A50FEE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E89EDF9-58F1-4C16-909F-1FDCDCD40BC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E89EDF9-58F1-4C16-909F-1FDCDCD40BC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E89EDF9-58F1-4C16-909F-1FDCDCD40BC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E89EDF9-58F1-4C16-909F-1FDCDCD40BC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

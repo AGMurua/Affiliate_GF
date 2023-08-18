@@ -40,7 +40,7 @@ namespace AffiliatesApi.Controllers
                 return BadRequest(nameErrorMsg);
             }
             var result = await _affiliateService.Create(TrimName(payload.Name));
-            return Created(Request.Path + "/" + result.Id, result);
+            return CreatedAtAction("GetById", result); ;
         }
 
         [HttpGet("{id}/Customers")]
