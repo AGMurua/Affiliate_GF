@@ -1,4 +1,5 @@
-﻿using AffiliatesApi.Model;
+﻿using AffiliatesApi.Data.Entities;
+using AffiliatesApi.Model;
 
 namespace AffiliatesApi.Business.Interfaces
 {
@@ -6,7 +7,7 @@ namespace AffiliatesApi.Business.Interfaces
     {
         public Task<ICollection<AffiliateDTO>> GetAll();
 
-        public void Create(string name);
+        public Task<int> Create(string name);
 
         public Task<ICollection<CustomerDTO>> GetByAffiliateId(Guid id);
 

@@ -15,9 +15,9 @@ namespace AffiliatesApi.Controllers
             _customerService = customerService;
         }
         [HttpPost]
-        public ActionResult CreateCustomer([FromBody] CustomerCreateDTO payload)
+        public async Task<IActionResult> CreateCustomer([FromBody] CustomerCreateDTO payload)
         {
-            _customerService.Create(payload);
+           var result = await _customerService.Create(payload);
            return Ok();
         }
     }

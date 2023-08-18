@@ -4,26 +4,36 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AffiliatesApi.Data.Repositories
 {
-    public class Repository : IRepository
+    public class Repository<T> : IRepository<T> where T : class
     {
         private readonly AppDbContext _dbContext;
+        private readonly DbSet<T> _entities;
         public Repository(AppDbContext dbContext)
         {
             _dbContext = dbContext;
+            _entities = _dbContext.Set<T>();
         }
 
-        public void Add(AffiliateEntity entity)
+        public async Task<T> AddAsync(T entity)
         {
-            _dbContext.Affiliate.Add(entity);
-            _dbContext.SaveChanges();
+            _entities.Add(entity);
+            await _dbContext.SaveChangesAsync();
+            return entity;
         }
 
-        async Task<IEnumerable<AffiliateEntity>> IRepository.GetAllAsync()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
-            var result = _dbContext.Affiliate.ToList();
+            var result = await _entities.ToListAsync();
+
             return result;
         }
 
-
+        public async Task<IList<AffiliateEntity>> GetAllByRelation()
+        {
+            var response = await _entities.OfType<AffiliateEntity>()
+                           .Include(a => a.Customers)
+                           .ToListAsync();
+            return response;
+        }
     }
 }

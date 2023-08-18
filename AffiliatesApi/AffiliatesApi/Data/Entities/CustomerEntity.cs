@@ -7,9 +7,9 @@ namespace AffiliatesApi.Data.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public int AffiliateId { get; set; }
-        public AffiliateEntity Affiliate { get; set; }
+        public virtual AffiliateEntity Affiliate { get; set; }
         public string Name { get; set; }
     }
 }

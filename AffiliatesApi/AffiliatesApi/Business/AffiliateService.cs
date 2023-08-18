@@ -8,19 +8,26 @@ namespace AffiliatesApi.Business
 {
     public class AffiliateService : IAffiliateService
     {
-        private IRepository _repository;
+        private IRepository<AffiliateEntity> _affiliateRepository;
+        private IRepository<CustomerEntity> _customerRepository;
         private readonly IMapper _mapper;
 
-        public AffiliateService(IRepository repository, IMapper mapper)
+        public AffiliateService(IRepository<AffiliateEntity> affiliateRepository, IMapper mapper)
         {
-            _repository = repository;
+            _affiliateRepository = affiliateRepository;
             _mapper = mapper;
 
         }
 
         public async Task<ICollection<AffiliateDTO>> GetAll()
         {
-           return _mapper.Map<IList<AffiliateDTO>>(_repository.GetAllAsync());
+            List<AffiliateEntity> data = (List<AffiliateEntity>)await _affiliateRepository.GetAllByRelation();
+            List<AffiliateDTO> result = new List<AffiliateDTO>();
+            foreach (AffiliateEntity affiliate in data)
+            {
+                result.Add(_mapper.Map<AffiliateDTO>(affiliate));
+            }
+            return result;
         }
 
         public async Task<ICollection<CustomerDTO>> GetByAffiliateId(Guid id)
@@ -28,10 +35,11 @@ namespace AffiliatesApi.Business
             throw new NotImplementedException();
         }
 
-        public async void Create(string name)
+        public async Task<int> Create(string name)
         {
             AffiliateDTO payload = new AffiliateDTO(name);
-            _repository.Add(_mapper.Map<AffiliateEntity>(payload));
+            var result = await _affiliateRepository.AddAsync(_mapper.Map<AffiliateEntity>(payload));
+            return result.Id;
         }
     }
 }

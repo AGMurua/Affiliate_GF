@@ -2,6 +2,7 @@
 using AffiliatesApi.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace AffiliatesApi.Controllers
 {
@@ -17,16 +18,16 @@ namespace AffiliatesApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return Ok(_affiliateService.GetAll());
+            return Ok(await _affiliateService.GetAll());
         }
 
         [HttpPost]
-        public IActionResult Create(string name)
+        public async Task<IActionResult> Create([FromBody, Required]string name)
         {
-            _affiliateService.Create(name);
-            return  Ok();
+            var result = await _affiliateService.Create(name);
+            return  Ok(Request.Path + "/" + result);
         }
     }
 }
