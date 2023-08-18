@@ -11,10 +11,11 @@ namespace AffiliatesApi.Controllers
     public class AffiliateController : ControllerBase
     {
         private readonly IAffiliateService _affiliateService; 
-
-        public AffiliateController(IAffiliateService affiliateService)
+        private readonly ICustomerService _customerService;
+        public AffiliateController(IAffiliateService affiliateService, ICustomerService customerService)
         {
             _affiliateService = affiliateService ?? throw new ArgumentNullException(nameof(affiliateService));
+            _customerService = customerService ?? throw new ArgumentNullException(nameof(customerService));
         }
 
         [HttpGet]
@@ -28,6 +29,13 @@ namespace AffiliatesApi.Controllers
         {
             var result = await _affiliateService.Create(name);
             return  Ok(Request.Path + "/" + result);
+        }
+
+        [HttpGet("{id}/Customers")]
+        public async Task<IActionResult> GetAffiliateCustomers(int id)
+        {
+            var result = await _customerService.GetCustomersByAffiliateId(id);
+            return Ok(Request.Path + "/" + result);
         }
     }
 }
