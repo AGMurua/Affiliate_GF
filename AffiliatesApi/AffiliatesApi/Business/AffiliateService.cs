@@ -35,12 +35,14 @@ namespace AffiliatesApi.Business
             return _mapper.Map<ICollection<AffiliateDTO>>(result);
         }
 
-        public async Task<int> Create(string name)
+        public async Task<AffiliateDTO> Create(string name)
         {
-            AffiliateWithRelationsDTO payload = new();
-            payload.Name = name;
+            AffiliateDTO payload = new()
+            {
+                Name = name
+            };
             var result = await _affiliateRepository.AddAsync(_mapper.Map<AffiliateEntity>(payload));
-            return result.Id;
+            return _mapper.Map<AffiliateDTO>(result);
         }
     }
 }

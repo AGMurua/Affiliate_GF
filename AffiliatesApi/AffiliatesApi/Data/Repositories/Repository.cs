@@ -1,4 +1,5 @@
 ﻿using AffiliatesApi.Data.Entities;
+using AffiliatesApi.Data.Interfaces;
 using AffiliatesApi.Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -42,6 +43,14 @@ namespace AffiliatesApi.Data.Repositories
                                           .Include(a => a.Customers)
                                           .ToListAsync();
             return response;
+        }
+
+        public async Task<IEntity> GetById(int affiliateId)
+        {
+            var result = await _entities.OfType<IEntity>()
+                                        .FirstOrDefaultAsync(x => x.Id == affiliateId);
+
+            return result;
         }
 
         public async Task<int> GetCommisions(int idAffiliated)

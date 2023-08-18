@@ -8,7 +8,7 @@ namespace AffiliatesApi.Business.Interfaces
         public Task<ICollection<AffiliateDTO>> GetAll();
         public Task<ICollection<AffiliateWithRelationsDTO>> GetAllWithRelations();
 
-        public Task<int> Create(string name);
+        public Task<AffiliateDTO> Create(string name);
 
 
 

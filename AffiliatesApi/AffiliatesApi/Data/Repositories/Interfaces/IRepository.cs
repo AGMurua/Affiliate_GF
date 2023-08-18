@@ -1,4 +1,5 @@
 ﻿using AffiliatesApi.Data.Entities;
+using AffiliatesApi.Data.Interfaces;
 
 namespace AffiliatesApi.Data.Repositories.Interfaces
 {
@@ -9,5 +10,6 @@ namespace AffiliatesApi.Data.Repositories.Interfaces
         Task<IEnumerable<CustomerEntity>> GetAllByRelation(int idAffiliate);
         Task<T> AddAsync(T entity);
         Task<int> GetCommisions(int idAffiliated);
+        Task<IEntity> GetById(int affiliateId);
     }
 }
