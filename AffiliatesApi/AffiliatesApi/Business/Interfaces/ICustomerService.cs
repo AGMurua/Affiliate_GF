@@ -5,6 +5,7 @@ namespace AffiliatesApi.Business.Interfaces
     public interface ICustomerService
     {
         public Task<int> Create(CustomerCreateDTO payload);
-        Task<List<CustomerDTO>> GetCustomersByAffiliateId(int idAffiliated);
+        Task<ICollection<CustomerDTO>> GetCustomersByAffiliateId(int idAffiliated);
+        Task<int> GetCommisionReport(int idAffiliated);
     }
 }

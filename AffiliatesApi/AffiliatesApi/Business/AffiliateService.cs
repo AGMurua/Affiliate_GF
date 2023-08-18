@@ -9,7 +9,6 @@ namespace AffiliatesApi.Business
     public class AffiliateService : IAffiliateService
     {
         private IRepository<AffiliateEntity> _affiliateRepository;
-        private IRepository<CustomerEntity> _customerRepository;
         private readonly IMapper _mapper;
 
         public AffiliateService(IRepository<AffiliateEntity> affiliateRepository, IMapper mapper)
@@ -19,25 +18,27 @@ namespace AffiliatesApi.Business
 
         }
 
-        public async Task<ICollection<AffiliateDTO>> GetAll()
+        public async Task<ICollection<AffiliateWithRelationsDTO>> GetAllWithRelations()
         {
-            List<AffiliateEntity> data = (List<AffiliateEntity>)await _affiliateRepository.GetAllByRelation();
-            List<AffiliateDTO> result = new List<AffiliateDTO>();
+            var data = await _affiliateRepository.GetAllWithRelations();
+            List<AffiliateWithRelationsDTO> result = new();
             foreach (AffiliateEntity affiliate in data)
             {
-                result.Add(_mapper.Map<AffiliateDTO>(affiliate));
+                result.Add(_mapper.Map<AffiliateWithRelationsDTO>(affiliate));
             }
             return result;
         }
 
-        public async Task<ICollection<CustomerDTO>> GetByAffiliateId(Guid id)
+        public async Task<ICollection<AffiliateDTO>> GetAll()
         {
-            throw new NotImplementedException();
+            var result = await _affiliateRepository.GetAllAsync();
+            return _mapper.Map<ICollection<AffiliateDTO>>(result);
         }
 
         public async Task<int> Create(string name)
         {
-            AffiliateDTO payload = new AffiliateDTO(name);
+            AffiliateWithRelationsDTO payload = new();
+            payload.Name = name;
             var result = await _affiliateRepository.AddAsync(_mapper.Map<AffiliateEntity>(payload));
             return result.Id;
         }

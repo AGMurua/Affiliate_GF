@@ -24,9 +24,16 @@ namespace AffiliatesApi.Business
             return result.Id;
         }
 
-        public async Task<List<CustomerDTO>> GetCustomersByAffiliateId(int idAffiliated)
+        public async Task<ICollection<CustomerDTO>> GetCustomersByAffiliateId(int idAffiliated)
         {
-            var result = await _customerRepository.
+            var result = await _customerRepository.GetAllByRelation(idAffiliated);
+            return _mapper.Map<IList<CustomerDTO>>(result);
+        }
+
+        public async Task<int> GetCommisionReport(int idAffiliated)
+        {
+            return await _customerRepository.GetCommisions(idAffiliated);
+            
         }
     }
 }

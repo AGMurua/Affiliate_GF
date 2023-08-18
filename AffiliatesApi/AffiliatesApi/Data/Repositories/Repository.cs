@@ -28,18 +28,26 @@ namespace AffiliatesApi.Data.Repositories
             return result;
         }
 
-        public async Task<IList<CustomerEntity>> GetAllByRelation(int idAffiliate)
+        public async Task<IEnumerable<CustomerEntity>> GetAllByRelation(int idAffiliate)
         {
             var response = await _entities.OfType<CustomerEntity>()
-                             .Where(x => x.AffiliateId == idAffiliate).ToListAsync();
+                                          .Where(x => x.AffiliateId == idAffiliate)
+                                          .ToListAsync();
             return response;
         }
 
-        public async Task<IList<AffiliateEntity>> GetAllWithRelations()
+        public async Task<IEnumerable<AffiliateEntity>> GetAllWithRelations()
         {
             var response = await _entities.OfType<AffiliateEntity>()
-               .Include(a => a.Customers)
-               .ToListAsync();
+                                          .Include(a => a.Customers)
+                                          .ToListAsync();
+            return response;
+        }
+
+        public async Task<int> GetCommisions(int idAffiliated)
+        {
+            var response = await _entities.OfType<CustomerEntity>()
+                                          .CountAsync(x => x.AffiliateId == idAffiliated);
             return response;
         }
     }
