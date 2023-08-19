@@ -4,7 +4,7 @@
 1. Begin by creating a local database in Microsoft SQL Server using SQL Server Management Studio (SSMS). You can name it as you like; for example, I will call it "CommissionsDB".
 2. Next, update the database connection string in the API's app settings. The default connection string appears as follows:
 Replace YourServerName with your database server's name and YourDatabaseName with your desired database name.
-3. You can choose to use either Swagger or the provided Postman collection for testing purposes. The Swagger documentation is accessible by default when you run the API. The Postman collection is available in the following folder:
+3. You can choose to use either Swagger or the provided Postman collection for testing purposes. The Swagger documentation is accessible by default when you run the API. The Postman collection is available in the following folder: API\AffiliatesApi\PostmanCollection
 4. Once you've configured the database connection string, the API is ready to be launched. The migrations will automatically create the necessary tables and seed some initial data for convenient testing.
 
 Make sure the default project to launch is AffiliateApi
