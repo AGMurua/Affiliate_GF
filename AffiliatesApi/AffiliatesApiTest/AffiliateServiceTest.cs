@@ -28,7 +28,7 @@ namespace AffiliatesApiTest
         [Fact]
         public async void TestGetAll()
         {
-            var affiliates = new List<AffiliateEntity>
+            List<AffiliateEntity> affiliates = new()
             {
                 new AffiliateEntity { Id = 1, Name = "Affiliate 1" },
                 new AffiliateEntity { Id = 2, Name = "Affiliate 2" }
@@ -36,7 +36,7 @@ namespace AffiliatesApiTest
 
             _mockRepositorieAffiliate.Setup(repo => repo.GetAllAsync()).ReturnsAsync(affiliates);
 
-            var result = await _affiliateService.GetAll();
+            ICollection<AffiliateDTO> result = await _affiliateService.GetAll();
 
             Assert.Equal(2, result.Count);
         }
@@ -44,7 +44,7 @@ namespace AffiliatesApiTest
         [Fact]
         public async void GetAllWithRelationsTest()
         {
-            var affiliates = new List<AffiliateEntity>
+            List<AffiliateEntity> affiliates = new()
             {
                 new AffiliateEntity { Id = 1, Name = "Affiliate 1", Customers = new List<CustomerEntity>
                                                                     { new CustomerEntity{Id = 1, Name = "Customer 1", AffiliateId = 1},
@@ -54,7 +54,7 @@ namespace AffiliatesApiTest
             };
 
             _mockRepositorieAffiliate.Setup(repo => repo.GetAllWithRelations()).ReturnsAsync(affiliates);
-            var result = await _affiliateService.GetAllWithRelations();
+            ICollection<AffiliateWithRelationsDTO> result = await _affiliateService.GetAllWithRelations();
             Assert.Equal(2, result.Count);
             Assert.Equal(2, result.FirstOrDefault(x => x.Id == 1).Customers.Count);
             Assert.Equal(1, result.FirstOrDefault(x => x.Id == 2).Customers.Count);
@@ -68,7 +68,7 @@ namespace AffiliatesApiTest
                 Name = "Test Name"
             };
             _mockRepositorieAffiliate.Setup(repo => repo.AddAsync(It.IsAny<AffiliateEntity>())).ReturnsAsync(affiliate);
-            var result = await _affiliateService.Create("Test Name");          
+            AffiliateDTO result = await _affiliateService.Create("Test Name");
             Assert.Equal(1, result.Id);
             Assert.Equal("Test Name", result.Name);
         }

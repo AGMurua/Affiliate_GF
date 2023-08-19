@@ -25,12 +25,12 @@ namespace AffiliatesApi.Controllers
                 return BadRequest(nameErrorMsg);
             }
             payload.Name = TrimName(payload.Name);
-            var result = await _customerService.Create(payload);
+            CustomerDTO result = await _customerService.Create(payload);
             if(result is null)
             {
                 return BadRequest(idNotFoundMsg);
             }
-            return Created(Request.Path + "/" + result.Id, result);
+            return CreatedAtAction("CreateCustomer", result);
         }
     }
 }

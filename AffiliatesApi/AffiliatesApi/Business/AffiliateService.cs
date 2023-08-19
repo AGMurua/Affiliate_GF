@@ -20,7 +20,7 @@ namespace AffiliatesApi.Business
 
         public async Task<ICollection<AffiliateWithRelationsDTO>> GetAllWithRelations()
         {
-            var data = await _affiliateRepository.GetAllWithRelations();
+            IEnumerable<AffiliateEntity> data = await _affiliateRepository.GetAllWithRelations();
             List<AffiliateWithRelationsDTO> result = new();
             foreach (AffiliateEntity affiliate in data)
             {
@@ -31,7 +31,7 @@ namespace AffiliatesApi.Business
 
         public async Task<ICollection<AffiliateDTO>> GetAll()
         {
-            var result = await _affiliateRepository.GetAllAsync();
+            IEnumerable<AffiliateEntity> result = await _affiliateRepository.GetAllAsync();
             return _mapper.Map<ICollection<AffiliateDTO>>(result);
         }
 

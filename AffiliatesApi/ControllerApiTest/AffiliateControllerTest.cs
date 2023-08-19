@@ -37,7 +37,7 @@ namespace ControllerApiTest
         [Fact]
         public async void GetAllAffiliates()
         {
-            var affiliates = new List<AffiliateEntity>
+            List<AffiliateEntity> affiliates = new()
             {
                 new AffiliateEntity { Id = 1, Name = "Affiliate 1" },
                 new AffiliateEntity { Id = 2, Name = "Affiliate 2" }
@@ -45,10 +45,9 @@ namespace ControllerApiTest
 
             _mockRepositorieAffiliate.Setup(repo => repo.GetAllAsync()).ReturnsAsync(affiliates);
 
-            var result = await _affiliateController.GetAll() as ActionResult;
-            var actionResult = Assert.IsType<OkObjectResult>(result);
-            var okResult = Assert.IsType<OkObjectResult>(result);
-            var returnedAffiliates = Assert.IsType<List<AffiliateDTO>>(okResult.Value);
+            IActionResult result = await _affiliateController.GetAll() as ActionResult;
+            OkObjectResult okResult = Assert.IsType<OkObjectResult>(result);
+            List<AffiliateDTO> returnedAffiliates = Assert.IsType<List<AffiliateDTO>>(okResult.Value);
             Assert.Equal(2, returnedAffiliates.Count);
         }
 
@@ -56,29 +55,81 @@ namespace ControllerApiTest
         public async void CreateAffiliatesTest()
         {
 
-            var payload = new AffiliateCreateDTO
+            AffiliateCreateDTO payload = new()
             {
                 Name = "Affiliate Test"
             };
 
-            var createdAffiliate = new AffiliateEntity { Id = 1, Name = "Affiliate 1" };
+            AffiliateEntity createdAffiliate = new()
+            {
+                Id = 1,
+                Name = "Affiliate 1"
+            };
 
             _mockRepositorieAffiliate.Setup(repo => repo.AddAsync(It.IsAny<AffiliateEntity>())).ReturnsAsync(createdAffiliate);
-            var result = await _affiliateController.Create(payload);
+            IActionResult result = await _affiliateController.Create(payload);
 
-            var createdAtActionResult = Assert.IsType<CreatedAtActionResult>(result);
+            CreatedAtActionResult createdAtActionResult = Assert.IsType<CreatedAtActionResult>(result);
             Assert.Equal(201, createdAtActionResult.StatusCode);
+        }
+        [Fact]
+        public async void CreateAffiliatesWrongNameTest()
+        {
+
+            var payload = new AffiliateCreateDTO
+            {
+                Name = "Affiliate Test 1234"
+            };
+
+            IActionResult? result = await _affiliateController.Create(payload);
+
+            BadRequestObjectResult badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal(400, badRequestResult.StatusCode);
         }
 
         [Fact]
         public async void GetAffiliateCustomersTest()
+        {
+            List<CustomerEntity> affiliatesCustomers = new List<CustomerEntity>
+            {
+              { new CustomerEntity{Id = 1, Name = "Customer 1", AffiliateId = 1} },
+              { new CustomerEntity{Id = 2, Name = "Customer 2", AffiliateId = 1} }
+            };
+
+            AffiliateEntity affiliateEntity = new()
+            {
+                Id = 1,
+                Name = "Affiliate 1"
+            };
+
+            AffiliateCreateDTO payload = new()
+            {
+                Name = "Affiliate Test"
+            };
+
+            AffiliateEntity createdAffiliate = new()
+            {
+                Id = 1,
+                Name = "Affiliate 1"
+            };
+
+            _mockRepositorieAffiliate.Setup(repo => repo.GetById(It.IsAny<int>())).ReturnsAsync(affiliateEntity);
+            _mockRepositorieCustomer.Setup(repo => repo.GetAllByRelation(It.IsAny<int>())).ReturnsAsync(affiliatesCustomers);
+
+            IActionResult? result = await _affiliateController.GetAffiliateCustomers(createdAffiliate.Id);
+            OkObjectResult? okResult = Assert.IsType<OkObjectResult>(result);
+            List<CustomerDTO>? returnedAffiliates = Assert.IsType<List<CustomerDTO>>(okResult.Value);
+            Assert.Equal(2, returnedAffiliates.Count);
+        }
+        [Fact]
+        public async void GetAffiliateCustomersWrongIdTest()
         {
             var affiliatesCustomers = new List<CustomerEntity>
             {
               { new CustomerEntity{Id = 1, Name = "Customer 1", AffiliateId = 1} },
               { new CustomerEntity{Id = 2, Name = "Customer 2", AffiliateId = 1} }
             };
-            var affiliateEntity = new AffiliateEntity { Id = 1, Name = "Affiliate 1" };
+            AffiliateEntity affiliateEntity = null;
 
             var payload = new AffiliateCreateDTO
             {
@@ -89,41 +140,77 @@ namespace ControllerApiTest
 
             _mockRepositorieAffiliate.Setup(repo => repo.GetById(It.IsAny<int>())).ReturnsAsync(affiliateEntity);
             _mockRepositorieCustomer.Setup(repo => repo.GetAllByRelation(It.IsAny<int>())).ReturnsAsync(affiliatesCustomers);
-            
-            var result = await _affiliateController.GetAffiliateCustomers(createdAffiliate.Id);
 
-            var actionResult = Assert.IsType<OkObjectResult>(result);
-            var okResult = Assert.IsType<OkObjectResult>(result);
-            var returnedAffiliates = Assert.IsType<List<CustomerDTO>>(okResult.Value);
-            Assert.Equal(2, returnedAffiliates.Count);
+            IActionResult? result = await _affiliateController.GetAffiliateCustomers(createdAffiliate.Id);
+
+            NotFoundObjectResult notFoundResult = Assert.IsType<NotFoundObjectResult>(result);
+            Assert.Equal(404, notFoundResult.StatusCode);
+
         }
 
         [Fact]
         public async void GetCommissionTest()
         {
-            var affiliatesCustomers = new List<CustomerEntity>
+            List<CustomerEntity> affiliatesCustomers = new()
             {
               { new CustomerEntity{Id = 1, Name = "Customer 1", AffiliateId = 1} },
               { new CustomerEntity{Id = 2, Name = "Customer 2", AffiliateId = 1} }
             };
-            var affiliateEntity = new AffiliateEntity { Id = 1, Name = "Affiliate 1" };
+            AffiliateEntity affiliateEntity = new()
+            {
+                Id = 1,
+                Name = "Affiliate 1"
+            };
 
-            var payload = new AffiliateCreateDTO
+            AffiliateCreateDTO payload = new()
             {
                 Name = "Affiliate Test"
             };
 
-            var createdAffiliate = new AffiliateEntity { Id = 1, Name = "Affiliate 1" };
+            AffiliateEntity createdAffiliate = new()
+            {
+                Id = 1,
+                Name = "Affiliate 1"
+            };
 
             _mockRepositorieAffiliate.Setup(repo => repo.GetById(It.IsAny<int>())).ReturnsAsync(affiliateEntity);
             _mockRepositorieCustomer.Setup(repo => repo.GetCommisions(It.IsAny<int>())).ReturnsAsync(affiliatesCustomers.Count());
 
-            var result = await _affiliateController.GetCommission(createdAffiliate.Id);
+            IActionResult result = await _affiliateController.GetCommission(createdAffiliate.Id);
 
-            var actionResult = Assert.IsType<OkObjectResult>(result);
-            var okResult = Assert.IsType<OkObjectResult>(result);
-            var returnedAffiliates = Assert.IsType<int>(okResult.Value);
+            OkObjectResult okResult = Assert.IsType<OkObjectResult>(result);
+            int returnedAffiliates = Assert.IsType<int>(okResult.Value);
             Assert.Equal(2, returnedAffiliates);
+        }
+        [Fact]
+        public async void GetCommissionWrongIdTest()
+        {
+            List<CustomerEntity> affiliatesCustomers = new()
+            {
+              { new CustomerEntity{Id = 1, Name = "Customer 1", AffiliateId = 1} },
+              { new CustomerEntity{Id = 2, Name = "Customer 2", AffiliateId = 1} }
+            };
+            AffiliateEntity affiliateEntity = null;
+
+            AffiliateCreateDTO payload = new()
+            {
+                Name = "Affiliate Test"
+            };
+
+            AffiliateEntity createdAffiliate = new()
+            {
+                Id = 1,
+                Name = "Affiliate 1"
+            };
+
+            _mockRepositorieAffiliate.Setup(repo => repo.GetById(It.IsAny<int>())).ReturnsAsync(affiliateEntity);
+            _mockRepositorieCustomer.Setup(repo => repo.GetCommisions(It.IsAny<int>())).ReturnsAsync(affiliatesCustomers.Count());
+
+            IActionResult result = await _affiliateController.GetCommission(createdAffiliate.Id);
+
+            NotFoundObjectResult notFoundResult = Assert.IsType<NotFoundObjectResult>(result);
+            Assert.Equal(404, notFoundResult.StatusCode);
+
         }
     }
 }

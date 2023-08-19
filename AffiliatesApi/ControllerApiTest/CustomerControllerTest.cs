@@ -17,9 +17,8 @@ namespace ControllerApiTest
         private Mock<IRepository<AffiliateEntity>> _mockRepositorieAffiliate;
         private Mock<IRepository<CustomerEntity>> _mockRepositorieCustomer;
         private IMapper _mapper;
-        private IAffiliateService _affiliateService;
         private ICustomerService _customerService;
-        private AffiliateController _affiliateController;
+        private CustomerController _customerController;
         public CustomerControllerTest()
         {
             _mockRepositorieAffiliate = new Mock<IRepository<AffiliateEntity>>();
@@ -30,27 +29,76 @@ namespace ControllerApiTest
             }).CreateMapper();
 
             _customerService = new CustomerService(_mockRepositorieCustomer.Object, _mockRepositorieAffiliate.Object, _mapper);
-            _affiliateService = new AffiliateService(_mockRepositorieAffiliate.Object, _mapper);
-            _affiliateController = new AffiliateController(_affiliateService, _customerService);
+            _customerController = new CustomerController(_customerService);
         }
 
 
         [Fact]
-        public async void CreateAffiliatesTest()
+        public async void CreateCustomerTest()
         {
 
-            var payload = new AffiliateCreateDTO
+            CustomerCreateDTO payload = new ()
             {
-                Name = "Affiliate Test"
+                Name = "Customer Test",
+                AffiliateId = 1,
+            };
+            AffiliateEntity affiliateEntity = new ()
+            {
+                Id = 1,
+                Name = "Affiliate 1"
+            };
+            CustomerEntity createdCustomer = new ()
+            {
+                Id = 1,
+                Name = "Customer Test",
+                AffiliateId = 1
             };
 
-            var createdAffiliate = new AffiliateEntity { Id = 1, Name = "Affiliate 1" };
+            _mockRepositorieAffiliate.Setup(repo => repo.GetById(It.IsAny<int>())).ReturnsAsync(affiliateEntity);
+            _mockRepositorieCustomer.Setup(repo => repo.AddAsync(It.IsAny<CustomerEntity>())).ReturnsAsync(createdCustomer);
+            IActionResult result = await _customerController.CreateCustomer(payload);
 
-            _mockRepositorieAffiliate.Setup(repo => repo.AddAsync(It.IsAny<AffiliateEntity>())).ReturnsAsync(createdAffiliate);
-            var result = await _affiliateController.Create(payload);
-
-            var createdAtActionResult = Assert.IsType<CreatedAtActionResult>(result);
+            CreatedAtActionResult createdAtActionResult = Assert.IsType<CreatedAtActionResult>(result);
             Assert.Equal(201, createdAtActionResult.StatusCode);
+        }
+        [Fact]
+        public async void CreateCustomerAffiliatedNotFoundTest()
+        {
+
+            CustomerCreateDTO payload = new()
+            {
+                Name = "Customer Test",
+                AffiliateId = 1,
+            };
+            AffiliateEntity affiliateEntity = null;
+            CustomerEntity createdCustomer = new()
+            {
+                Id = 1,
+                Name = "Customer Test",
+                AffiliateId = 1
+            };
+
+            _mockRepositorieAffiliate.Setup(repo => repo.GetById(It.IsAny<int>())).ReturnsAsync(affiliateEntity);
+            _mockRepositorieCustomer.Setup(repo => repo.AddAsync(It.IsAny<CustomerEntity>())).ReturnsAsync(createdCustomer);
+
+            IActionResult result = await _customerController.CreateCustomer(payload);
+
+            BadRequestObjectResult badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal(400, badRequestResult.StatusCode);
+        }
+        [Fact]
+        public async void CreateCustomerWrongNameTest()
+        {
+            CustomerCreateDTO payload = new ()
+            {
+                Name = "Customer Test 1234",
+                AffiliateId = 1,
+            };
+
+            IActionResult result = await _customerController.CreateCustomer(payload);
+
+            BadRequestObjectResult badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal(400, badRequestResult.StatusCode);
         }
 
     }

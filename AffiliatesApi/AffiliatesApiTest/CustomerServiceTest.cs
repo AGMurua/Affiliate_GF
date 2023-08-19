@@ -49,7 +49,7 @@ namespace AffiliatesApiTest
             };
             _mockRepositorieAffiliate.Setup(repo => repo.GetById(payload.AffiliateId)).ReturnsAsync(affiliateLink);
             _mockRepositorieCustomer.Setup(repo => repo.AddAsync(It.IsAny<CustomerEntity>())).ReturnsAsync(customerToAdd);
-            var result = await _customerService.Create(payload);
+            CustomerDTO result = await _customerService.Create(payload);
 
 
             Assert.Equal(3, result.Id);
@@ -73,7 +73,7 @@ namespace AffiliatesApiTest
             AffiliateEntity affiliateLink = null;
             _mockRepositorieAffiliate.Setup(repo => repo.GetById(payload.AffiliateId)).ReturnsAsync(affiliateLink);
             _mockRepositorieCustomer.Setup(repo => repo.AddAsync(It.IsAny<CustomerEntity>())).ReturnsAsync(customerToAdd);
-            var result = await _customerService.Create(payload);
+            CustomerDTO result = await _customerService.Create(payload);
             Assert.Equal(null, result);
         }
 
@@ -105,7 +105,7 @@ namespace AffiliatesApiTest
             _mockRepositorieAffiliate.Setup(repo => repo.GetById(affiliateLink.Id)).ReturnsAsync(affiliateLink);
             _mockRepositorieCustomer.Setup(repo => repo.GetCommisions(affiliateLink.Id)).ReturnsAsync(customers.Count);
 
-            var result = await _customerService.GetCommisionReport(affiliateLink.Id);
+            int? result = await _customerService.GetCommisionReport(affiliateLink.Id);
             Assert.Equal(2, result);
         }
     }

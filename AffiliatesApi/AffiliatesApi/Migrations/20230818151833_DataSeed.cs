@@ -31,7 +31,7 @@ namespace AffiliatesApi.Migrations
 
             migrationBuilder.InsertData(table: "Customer",
                                         columns: new[] { "Id", "AffiliateId", "Name" },
-                                        values: new object[] { 4, 2, "Samuel L. Jackson" });
+                                        values: new object[] { 4, 2, "Samuel Leroy Jackson" });
             migrationBuilder.InsertData(table: "Customer",
                                         columns: new[] { "Id", "AffiliateId", "Name" },
                                         values: new object[] { 5, 2, "Uma Thurman" });

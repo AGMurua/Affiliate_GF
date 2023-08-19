@@ -40,7 +40,7 @@ namespace AffiliatesApi.Controllers
                 return BadRequest(nameErrorMsg);
             }
             var result = await _affiliateService.Create(TrimName(payload.Name));
-            return CreatedAtAction("GetById", result); ;
+            return CreatedAtAction("Create", result); 
         }
 
         [HttpGet("{id}/Customers")]
@@ -50,7 +50,7 @@ namespace AffiliatesApi.Controllers
             {
                 return BadRequest();
             }
-            var result = await _customerService.GetCustomersByAffiliateId(id);
+            ICollection<CustomerDTO> result = await _customerService.GetCustomersByAffiliateId(id);
             if (result is null)
             {
                 return NotFound(idNotFoundMsg);
@@ -58,7 +58,7 @@ namespace AffiliatesApi.Controllers
             return Ok(result);
         }
 
-        [HttpGet("Commisions/{id}")]
+        [HttpGet("{id}/Commisions")]
         public async Task<IActionResult> GetCommission([Required] int id)
         {
             if (id == 0)
