@@ -55,6 +55,10 @@ namespace AffiliatesApi.Controllers
             {
                 return NotFound(idNotFoundMsg);
             }
+            if(result.Count() == 0)
+            {
+                return NoContent();
+            }
             return Ok(result);
         }
 

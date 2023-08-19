@@ -41,7 +41,7 @@ namespace AffiliatesApi.Business
             {
                 Name = name
             };
-            var result = await _affiliateRepository.AddAsync(_mapper.Map<AffiliateEntity>(payload));
+            AffiliateEntity result = await _affiliateRepository.AddAsync(_mapper.Map<AffiliateEntity>(payload));
             return _mapper.Map<AffiliateDTO>(result);
         }
     }
