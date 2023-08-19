@@ -1,0 +1,154 @@
+{
+	"info": {
+		"_postman_id": "2cd08021-b044-47d5-b44a-683e950f0942",
+		"name": "API GF Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15971163"
+	},
+	"item": [
+		{
+			"name": "GetAll Affiliates",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7004/api/Affiliate",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7004",
+					"path": [
+						"api",
+						"Affiliate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAll Affiliates with customers related",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7004/api/Affiliate/GetAllWithRelations",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7004",
+					"path": [
+						"api",
+						"Affiliate",
+						"GetAllWithRelations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List customers of an affiliate",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7004/api/Affiliate/1/Customers",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7004",
+					"path": [
+						"api",
+						"Affiliate",
+						"1",
+						"Customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Count commisions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7004/api/Affiliate/1/Commisions/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7004",
+					"path": [
+						"api",
+						"Affiliate",
+						"1",
+						"Commisions",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Affiliate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"name\" : \"Martin Scorsese\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7004/api/Affiliate",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7004",
+					"path": [
+						"api",
+						"Affiliate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create customer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"affiliateId\": 3,\r\n    \"name\": \"Leonardo DiCaprio\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7004/api/Customer",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7004",
+					"path": [
+						"api",
+						"Customer"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
