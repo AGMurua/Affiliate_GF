@@ -8,7 +8,7 @@ Replace YourServerName with your database server's name and YourDatabaseName wit
 4. Once you've configured the database connection string, the API is ready to be launched. The migrations will automatically create the necessary tables and seed some initial data for convenient testing.
 
 Make sure the default project to launch is AffiliateApi
-![alt text](<blockquote class="imgur-embed-pub" lang="en" data-id="a/yqCtzYg" data-context="false" ><a href="//imgur.com/a/yqCtzYg"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>)
+
 
 ## Testing
 1. The Postman collection comes pre-configured, making it easy to start using the API with sample data that's ready to go. You can find it in : API\AffiliatesApi\PostmanCollection
@@ -74,3 +74,7 @@ If this affiliate doesn't have any customers, the returned number will be 0.
 |---------------------|--------------------------------------------------------|
 | 201                 | Creates and returns the entity saved in the database   |
 | 400                 | Returns a bad request with an error message            | 
+
+
+
+## Thank you very much for taking the time to read and dedicate time to test this. :raising_hand:
