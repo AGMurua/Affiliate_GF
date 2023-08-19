@@ -26,7 +26,10 @@ There are two controllers: `Affiliate` and `Customer` Controller.
 4. **GET** `api/Affiliate/{id}/Customers`: Retrieve a list of customers associated with a specific affiliate. Provide the affiliate's ID as a path parameter.
 5. **GET** `api/Affiliate/{id}/Commissions`: Retrieve the count of customers associated with a specific affiliate. Provide the affiliate's ID as a path parameter.
 
-## Expected behavior:
+### Customer Controller:
+1. **POST** `api/Customer`: Create a new customer linked to an Affiliate. Include the customer name and the AffiliateID in the request body. A unique ID will be generated on the database side.
+
+## Expected behavior Affiliate:
 
 ###  **GET** `api/Affiliate`  
 | Expected http code  | Expected result                                        |
@@ -48,8 +51,9 @@ There are two controllers: `Affiliate` and `Customer` Controller.
 | Expected http code  | Expected result                                        |
 |---------------------|--------------------------------------------------------|
 | 200                 | Returns all customers for the specified Affiliate      |
-| 404                 | Returns not found with an explanatory message          |
 | 204                 | Returns no content if there are no customers           |
+| 404                 | Returns not found with an explanatory message          |
+
 
 ### **POST** `api/Affiliate/{id}/Commissions`  
 | Expected http code  | Expected result                                        |
@@ -57,6 +61,12 @@ There are two controllers: `Affiliate` and `Customer` Controller.
 | 200                 | Returns the number of customers associated             |
 | 404                 | Returns not found with an explanatory message          |
 
+If this affiliate doesn't have any customers, the returned number will be 0.
 
+## Expected behavior Customer:
 
-
+### **POST** `api/Customer`  
+| Expected http code  | Expected result                                        |
+|---------------------|--------------------------------------------------------|
+| 201                 | Creates and returns the entity saved in the database   |
+| 400                 | Returns a bad request with an error message            | 
