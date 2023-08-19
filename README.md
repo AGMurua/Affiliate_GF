@@ -26,3 +26,16 @@ There are two controllers: `Affiliate` and `Customer` Controller.
 4. **GET** `api/Affiliate/{id}/Customers`: Retrieve a list of customers associated with a specific affiliate. Provide the affiliate's ID as a path parameter.
 5. **GET** `api/Affiliate/{id}/Commissions`: Retrieve the count of customers associated with a specific affiliate. Provide the affiliate's ID as a path parameter.
 
+### Espected Controller:
+
+| Endpoint                                    | Expected http code | Expected result                                        |
+|---------------------------------------------|---------------------|--------------------------------------------------------|
+| **GET** `api/Affiliate`                     | 200                 | Returns all the affiliates in the database            |
+| **GET** `api/Affiliate/GetAllWithRelations` | 200                 | Returns all the affiliates with nested customers      |
+| **POST** `api/Affiliate`                    | 201                 | Returns the entity saved in the database              |
+| **POST** `api/Affiliate`                    | 400                 | Returns a bad request with an error message           |
+| **GET** `api/Affiliate/{id}/Customers`      | 200                 | Returns all customers for the specified Affiliate    |
+| **GET** `api/Affiliate/{id}/Customers`      | 404                 | Returns not found with an explanatory message         |
+| **GET** `api/Affiliate/{id}/Customers`      | 204                 | Returns no content if there are no customers          |
+| **GET** `api/Affiliate/{id}/Commissions`    | 200                 | Returns the number of customers associated           |
+| **GET** `api/Affiliate/{id}/Commissions`    | 404                 | Returns not found with an explanatory message         |
