@@ -7,6 +7,9 @@ Replace YourServerName with your database server's name and YourDatabaseName wit
 3. You can choose to use either Swagger or the provided Postman collection for testing purposes. The Swagger documentation is accessible by default when you run the API. The Postman collection is available in the following folder:
 4. Once you've configured the database connection string, the API is ready to be launched. The migrations will automatically create the necessary tables and seed some initial data for convenient testing.
 
+Make sure the default project to launch is AffiliateApi
+![alt text](https://imgur.com/a/yqCtzYg)
+
 ## Testing
 1. The Postman collection comes pre-configured, making it easy to start using the API with sample data that's ready to go. You can find it in : API\AffiliatesApi\PostmanCollection
 2. Any endpoint that involves sending data will validate the input to ensure it only contains letters and spaces, and any unnecessary characters will be trimmed.
