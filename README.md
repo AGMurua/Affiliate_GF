@@ -14,7 +14,7 @@ Make sure the default project to launch is AffiliateApi
 1. The Postman collection comes pre-configured, making it easy to start using the API with sample data that's ready to go. You can find it in : API\AffiliatesApi\PostmanCollection
 2. Any endpoint that involves sending data will validate the input to ensure it only contains letters and spaces, and any unnecessary characters will be trimmed.
 3. It's important to note that I've considered the requirement that "Each affiliate and customer has a unique identifier and a name." As a result, the IDs are unique; however, customer and affiliate names can be repeated.
-
+IMPORTANT: The port of the API might change depending on the type of run you select in Visual Studio. Therefore, if the endpoint port doesn't match the one in Postman, it can lead to errors. You need to update the port in Postman to match the current port in your API.
 
 # How to Run It
 
@@ -50,6 +50,7 @@ There are two controllers: `Affiliate` and `Customer` Controller.
 |---------------------|--------------------------------------------------------|
 | 201                 | Creates and returns the entity saved in the database   |
 | 400                 | Returns a bad request with an error message            | 
+| 422                 | Returns a message containing the explanation for the error| 
 
 ### **POST** `api/Affiliate/{id}/Customers`  
 | Expected http code  | Expected result                                        |
@@ -74,6 +75,7 @@ If this affiliate doesn't have any customers, the returned number will be 0.
 |---------------------|--------------------------------------------------------|
 | 201                 | Creates and returns the entity saved in the database   |
 | 400                 | Returns a bad request with an error message            | 
+| 422                 | Returns a message containing the explanation for the error| 
 
 
 

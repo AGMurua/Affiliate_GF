@@ -83,8 +83,8 @@ namespace ControllerApiTest
 
             IActionResult result = await _customerController.CreateCustomer(payload);
 
-            BadRequestObjectResult badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
-            Assert.Equal(400, badRequestResult.StatusCode);
+            UnprocessableEntityObjectResult badRequestResult = Assert.IsType<UnprocessableEntityObjectResult>(result);
+            Assert.Equal(422, badRequestResult.StatusCode);
         }
         [Fact]
         public async void CreateCustomerWrongNameTest()
@@ -97,8 +97,8 @@ namespace ControllerApiTest
 
             IActionResult result = await _customerController.CreateCustomer(payload);
 
-            BadRequestObjectResult badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
-            Assert.Equal(400, badRequestResult.StatusCode);
+            UnprocessableEntityObjectResult badRequestResult = Assert.IsType<UnprocessableEntityObjectResult>(result);
+            Assert.Equal(422, badRequestResult.StatusCode);
         }
 
     }

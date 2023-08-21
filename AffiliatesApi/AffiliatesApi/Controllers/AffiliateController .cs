@@ -37,7 +37,7 @@ namespace AffiliatesApi.Controllers
         {
             if(!CheckRegexName(payload.Name))
             {
-                return BadRequest(nameErrorMsg);
+                return UnprocessableEntity(nameErrorMsg);
             }
             var result = await _affiliateService.Create(TrimName(payload.Name));
             return CreatedAtAction("Create", result); 

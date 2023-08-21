@@ -82,8 +82,8 @@ namespace ControllerApiTest
 
             IActionResult? result = await _affiliateController.Create(payload);
 
-            BadRequestObjectResult badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
-            Assert.Equal(400, badRequestResult.StatusCode);
+            UnprocessableEntityObjectResult badRequestResult = Assert.IsType<UnprocessableEntityObjectResult>(result);
+            Assert.Equal(422, badRequestResult.StatusCode);
         }
 
         [Fact]

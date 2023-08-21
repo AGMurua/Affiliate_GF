@@ -22,13 +22,13 @@ namespace AffiliatesApi.Controllers
         {
             if (!CheckRegexName(payload.Name))
             {
-                return BadRequest(nameErrorMsg);
+                return UnprocessableEntity(nameErrorMsg);
             }
             payload.Name = TrimName(payload.Name);
             CustomerDTO result = await _customerService.Create(payload);
             if(result is null)
             {
-                return BadRequest(idNotFoundMsg);
+                return UnprocessableEntity(idNotFoundMsg);
             }
             return CreatedAtAction("CreateCustomer", result);
         }
