@@ -46,10 +46,6 @@ namespace AffiliatesApi.Controllers
         [HttpGet("{id}/Customers")]
         public async Task<IActionResult> GetAffiliateCustomers(int id)
         {
-            if (id == 0)
-            {
-                return BadRequest();
-            }
             ICollection<CustomerDTO> result = await _customerService.GetCustomersByAffiliateId(id);
             if (result is null)
             {
